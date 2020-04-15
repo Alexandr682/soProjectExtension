@@ -180,7 +180,6 @@ void add_money_mp(unsigned short id, float money);
 void Hook_onEat_callback(WORD pClass, WORD unkn);
 void Hook_Open_PDA();
 void Hook_open_dialog();
-void Hook_CAI_STALKER_UPDATE_ANIMATION(DWORD pClass);
 void Hook_CHudItem_SwitchState(DWORD pClass, DWORD State);
 
 void Hook_CPhysicObject_Door_Disable_Interpolation();
@@ -2112,7 +2111,12 @@ void Launch_Mod_Extension() //Расширение от MoD Team(DiR.X)
 
 #ifdef FIX_AF_PARTICLE
 	//Убираем свечение от артов в ногах(Не проверял)
-	HookHandle->Byte((DWORD)(gGameOffset + 0x2E384E), 1, 0x75);
+	HookHandle->Byte((DWORD)(gGameOffset + 0x2E43F2), 1, 0x74);
+
+	//Dissable continue for CArtefact item(destroyAllItems)
+	HookHandle->Byte((DWORD)(gGameOffset + 0x390D5D), 1, 0xEB);
+	HookHandle->Nop((DWORD)(gGameOffset + 0x390D5F), 6);
+	HookHandle->Nop((DWORD)(gGameOffset + 0x390D65), 20);
 #endif // FIX_AF_PARTICLE
 
 #ifdef ACTOR_SINGLE_MINI_MAP_ICO
